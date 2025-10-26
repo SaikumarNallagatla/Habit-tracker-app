@@ -54,3 +54,32 @@ export const getHabitSuggestions = async (): Promise<SuggestedHabit[]> => {
     ];
   }
 };
+
+// FIX: Implement and export missing guide-fetching functions.
+const generateGuide = async (prompt: string): Promise<string> => {
+  try {
+    const response = await ai.models.generateContent({
+      model: "gemini-2.5-flash",
+      contents: prompt,
+    });
+    return response.text;
+  } catch (error) {
+    console.error("Error generating guide:", error);
+    throw new Error("Failed to generate guide from API.");
+  }
+};
+
+export const getMeditationGuide = async (): Promise<string> => {
+  const prompt = "Provide a simple, step-by-step guide for a beginner on how to meditate. Focus on mindfulness and breathing techniques. Format it with clear headings and short paragraphs.";
+  return generateGuide(prompt);
+};
+
+export const getSubconsciousMindGuide = async (): Promise<string> => {
+  const prompt = "Explain the power of the subconscious mind in habit formation in a simple and motivating way. Include practical tips on how to influence it positively. Keep it concise and easy to understand for a general audience.";
+  return generateGuide(prompt);
+};
+
+export const getSunriseExerciseGuide = async (): Promise<string> => {
+  const prompt = "List the key benefits of exercising at sunrise. Make it inspiring and focus on both mental and physical advantages. Use bullet points for clarity.";
+  return generateGuide(prompt);
+};
